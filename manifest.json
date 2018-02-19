@@ -1,0 +1,24 @@
+{
+    "name": "Tread lightly",
+    "description": "A simple addon to flag a site as a Production site",
+    "version": "1.0",
+    "manifest_version": 2,
+
+    "browser_action": {
+        "default_popup": "src/options.html",
+        "default_icon": "assets/img/exp.png"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "css": ["styles/content.css"],
+            "js": [ "src/content.js", "lib/fontawesome-all.min.js" ]
+        }
+    ],
+    
+    "permissions": [
+        "tabs",
+        "storage"
+    ]
+}

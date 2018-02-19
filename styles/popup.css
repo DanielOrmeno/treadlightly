@@ -1,0 +1,62 @@
+body {
+    margin: 0;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+}
+
+#header {
+    padding: 1.5em;
+    background-color: #4c6ef5;
+    color: white; 
+    margin-bottom: 10px;
+}
+
+#header.warning {
+    background-color: rgb(255, 83, 73);
+}
+
+p.logo {
+    text-align: center;
+    font-size: 2em;
+    margin: 0;
+}
+
+h1.header {
+    font-weight: 300;
+    margin: 0;
+    text-align: center;
+}
+
+#container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 1.1em;
+}
+
+#enable-label {
+    margin-right: 10px;
+}
+/*
+Schema
+https://color.adobe.com/Colors-color-theme-10463031/edit/?copy=true&base=1&rule=Custom&selected=0&name=Copy%20of%20Colors&mode=rgb&rgbvalues=0.160784,0.172549,0.266667,1,0.32549,0.286275,0.941176,0.941176,0.945098,0.0941176,0.803922,0.792157,0.309804,0.501961,0.882353&swatchOrder=0,1,2,3,4
+*/
+
+#enable-input {
+    font-size: 2em;
+}
+
+.pretty.p-switch.p-fill input:checked~.state.tc-danger:before {
+    background-color: #ff5349!important;
+}
+
+.pretty.p-switch.p-fill input:checked~.state.tc-danger:before {
+    background-color: #ff5349!important;
+}
+
+.pretty.p-switch.p-fill input:checked~.state:before {
+    border-color: #ff5349;
+    background-color: #ff5349!important;
+}

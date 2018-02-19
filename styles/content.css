@@ -1,0 +1,24 @@
+#tc-warning-header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1000;  
+    padding: 10px;
+    background-color: rgba(255, 83, 73, 0.85);
+}
+
+#tc-warning-header h1 {
+    color: #F0F0F1 !important;
+    font-weight: 500 !important;
+    font-size: 1.5em !important;
+    text-align: center !important;
+    margin: 0 !important;
+}
+
+#tc-warning-header-icon {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    cursor: pointer;
+    color: #F0F0F1;
+}
