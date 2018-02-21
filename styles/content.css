@@ -19,7 +19,7 @@
     left: 2em;
 }
 
-#tc-warning-header.banner {
+#tc-warning-header.tc-banner {
     position: absolute;
     top: 0;
     width: 100%;
@@ -39,11 +39,11 @@
     padding: 10px 0;
 }
 
-#tc-warning-header.banner h1 {
+#tc-warning-header.tc-tc-banner h1 {
     flex: 1;
 }
 
-#tc-warning-header.banner #tc-warning-header-icon {
+#tc-warning-header.tc-banner #tc-warning-header-icon {
     padding: 1.5em;
     flex: 1;
     max-width: 3em;

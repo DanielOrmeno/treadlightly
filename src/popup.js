@@ -50,7 +50,6 @@ function getUrls(callback) {
  */
 function saveUrl(url, enabled, options) {
   getUrls((urls) => {
-    
     let result = [...urls];
 
     const index = urls.findIndex(u => u.url === url);
@@ -77,7 +76,6 @@ function saveUrl(url, enabled, options) {
  * @param {string} url the url to parse
  */
 function getDomainName (url) {
-    
   if (!url || typeof url !== 'string') return null;
 
   let reg = /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/;
@@ -124,6 +122,7 @@ function setOptionsState (enable, urlOptions) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const checkbox = document.querySelector('#tc-enable-warning');
+  const styleOptions = document.getElementsByName('warningstyle');
   
   getCurrentTabUrl((tab, url) => {
     const domainName = getDomainName(url);
@@ -140,8 +139,16 @@ document.addEventListener('DOMContentLoaded', () => {
         saveUrl(domainName, this.checked, site.options);
         setHeaderState(this.checked);
         setOptionsState(this.checked, site.options);
-        chrome.tabs.sendMessage(tab.id, { enabled: this.checked, options: site.options }, null, null)
+        chrome.tabs.sendMessage(tab.id, { name: 'toggle-warning', enabled: this.checked, options: site.options }, null, null)
       });
+      
+      styleOptions.forEach(o => {
+        o.onclick = function () {
+          site.options.style = this.value;
+          saveUrl(domainName, site.enabled, site.options);
+          chrome.tabs.sendMessage(tab.id, { name: 'change-style', style: this.value }, null, null)
+        }
+      })
     });
   });
 });

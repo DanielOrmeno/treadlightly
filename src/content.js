@@ -17,18 +17,24 @@ function getUrls(callback) {
 /**
  * Creates the HTML markup and appends it to the body
  */
-function insertWarning () {
+function insertWarning (style) {
     const div = document.createElement("div");
-
+    const st = style === 'tc-popup' ? `${style} right` : style;
+    
     div.innerHTML =
-    `<div id="tc-warning-header" class="tc-popup right">
+    `<div id="tc-warning-header" class="${st}">
         <h1>Tread Lightly! This is a production site.</h1>
         <div id="tc-warning-header-icon"></div>
     </div>`;
 
     div.addEventListener('mouseover', function ($event) {
         $event.stopImmediatePropagation();
-        console.log('hover banner');
+        const header = document.getElementById('tc-warning-header');
+        const hClass = header.className;
+        if (hClass.search('tc-popup') > -1) {
+            if (hClass.search('right') > -1) header.className = hClass.replace('right', 'left');
+            else if (hClass.search('left') > -1) header.className = hClass.replace('left', 'right');
+        }
     });
 
     document.body.appendChild(div);
@@ -79,15 +85,21 @@ getUrls((urls) => {
     const url = parseUrl(location.href);
     const site = urls.find(u => u.url === url);
     if (site.enabled) {
-        insertWarning();
+        insertWarning(site.options.style);
     }
 });
 
 chrome.runtime.onMessage.addListener((message, sender, callback) => {
-    console.log(message.options.style);
-    if (message.enabled) {
-        insertWarning();
-    } else {
-        removeWarning();
+    if (message.name === 'toggle-warning') {
+        if (message.enabled) {
+            insertWarning(message.options.style);
+        } else {
+            removeWarning();
+        }
     }
-})
+
+    if (message.name === 'change-style') {
+        removeWarning();
+        insertWarning(message.style);
+    }
+});
