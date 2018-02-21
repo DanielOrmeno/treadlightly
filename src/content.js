@@ -22,13 +22,25 @@ function insertWarning () {
 
     div.innerHTML =
     `<div id="tc-warning-header">
-        <div id="tc-warning-header-icon"><i class="fal fa-times-octagon"></i></div>
         <h1>Tread Lightly! This is a production site.</h1>
+        <div id="tc-warning-header-icon"></div>
     </div>`;
+
+    div.addEventListener('mouseover', function ($event) {
+        $event.stopImmediatePropagation();
+        console.log('hover banner');
+    });
 
     document.body.appendChild(div);
 
-    document.getElementById('tc-warning-header-icon').addEventListener('click', removeWarning);
+    const closeIcon = document.getElementById('tc-warning-header-icon');
+    closeIcon.addEventListener('click', removeWarning);
+    closeIcon.addEventListener('mouseover', function ($event) {
+        $event.stopImmediatePropagation();
+    });
+
+    const imgURL = chrome.extension.getURL("assets/img/Orion_close.svg");
+    closeIcon.style.backgroundImage = `url(${imgURL})`;
 };
 
 /** 

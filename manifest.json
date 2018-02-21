@@ -13,12 +13,16 @@
         {
             "matches": ["http://*/*", "https://*/*"],
             "css": ["styles/content.css"],
-            "js": [ "src/content.js", "lib/fontawesome-all.min.js" ]
+            "js": [ "src/content.js"]
         }
     ],
     
     "permissions": [
         "tabs",
         "storage"
-    ]
+    ],
+
+    "web_accessible_resources": [
+        "assets/img/*.svg"
+      ]
 }
