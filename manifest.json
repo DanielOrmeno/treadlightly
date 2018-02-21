@@ -1,7 +1,7 @@
 {
     "name": "Tread lightly",
     "description": "A simple addon to flag a site as a Production site",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "manifest_version": 2,
 
     "browser_action": {
