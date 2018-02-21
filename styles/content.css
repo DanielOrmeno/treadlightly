@@ -1,16 +1,33 @@
 #tc-warning-header {
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    width: 100%;
     z-index: 1000;  
     background-color: rgba(255, 83, 73, 0.85);
 }
 
+#tc-warning-header.tc-popup {
+    position: fixed;
+    top: 1em;
+    border-radius: 0.5em;
+    padding: 15px 10px 10px;
+    width: 20%;
+}
+
+#tc-warning-header.tc-popup.right {
+    right: 2em;
+}
+
+#tc-warning-header.tc-popup.left {
+    left: 2em;
+}
+
+#tc-warning-header.banner {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 #tc-warning-header h1 {
-    padding: 10px 0;
-    flex: 1;
     color: #F0F0F1 !important;
     font-weight: 500 !important;
     font-size: 1.5em !important;
@@ -18,11 +35,33 @@
     margin: 0 !important;
 }
 
-#tc-warning-header-icon {
+#tc-warning-header h1 {
+    padding: 10px 0;
+}
+
+#tc-warning-header.banner h1 {
+    flex: 1;
+}
+
+#tc-warning-header.banner #tc-warning-header-icon {
     padding: 1.5em;
     flex: 1;
     max-width: 3em;
     height: 2em;
+}
+
+#tc-warning-header.tc-popup #tc-warning-header-icon {
+    position: absolute;
+    max-width: 1.5em;
+    padding: 0;
+    background-size: 1.5em;
+    top: 0;
+    right: 0;
+    height: 2em;
+    width: 2em;
+}
+
+#tc-warning-header-icon {
     cursor: pointer;
     background-size: cover;
     background-position: center;

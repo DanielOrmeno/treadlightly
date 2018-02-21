@@ -1,4 +1,5 @@
 const UrlKey = "tread_urls";
+const DefaultSite = { url: '', enabled: false, options: { style: 'tc-popup'} };
 /**
  * Get the current URL.
  *
@@ -47,23 +48,23 @@ function getUrls(callback) {
  * Save the url.
  * @param {string} url URL for which background color is to be saved.
  */
-function saveUrl(url, shouldSave) {
+function saveUrl(url, enabled, options) {
   getUrls((urls) => {
     
     let result = [...urls];
 
-    const index = urls.indexOf(url);
-
-    // Add or remove the url from the list.
-    if (shouldSave && index === -1) {
-      result.push(url);
-    }
-
-    if (!shouldSave && index > -1) {
-      result.splice(url);
+    const index = urls.findIndex(u => u.url === url);
+   
+    // new url
+    if (index === -1) {
+      const newUrl = {url , options, enabled};
+      result.push(newUrl);
+    } else {
+      result[index].enabled = enabled;
+      result[index].options = options;
     }
     
-    let item = { };
+    let item = {};
     item[UrlKey] = result;
     
     chrome.storage.sync.set(item);
@@ -92,16 +93,32 @@ function getDomainName (url) {
 /** 
  * Updates the banner styling to show the enabled state.
 */
-function toggleHeaderState (enable) {
+function setHeaderState (enable) {
   const c = ' warning';
   const header = document.getElementById('header');
-  
   if (!header) return;
 
   if (enable) {
     header.className += c;
   } else {
     header.className = header.className.replace(c, '');
+  }
+}
+
+/** 
+ * Shows the options and sets the state.
+*/
+function setOptionsState (enable, urlOptions) {
+  const options = document.getElementById('options-wrapper');
+  if (!options) return;
+
+  if (enable) {
+    options.style.display = 'block';
+    // grab style from options or default to tc-popup
+    const radio = document.getElementById(urlOptions.style) || document.getElementById('tc-popup');
+    radio.checked = true;
+  } else {
+    options.style.display = 'none';
   }
 }
 
@@ -112,18 +129,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const domainName = getDomainName(url);
     
     getUrls((urls) => {
-      // set initial state before subscribing to event.
-      if (urls.indexOf(domainName) > -1) {
-        checkbox.checked = true;
-        toggleHeaderState(true);
-      }
+      // Get site from storage or default to new site.
+      const site = urls.find(u => u.url === domainName) || Object.assign(DefaultSite, {url: domainName});
+      
+      checkbox.checked = site.enabled;
+      setHeaderState(site.enabled);
+      setOptionsState(site.enabled, site.options);
 
       checkbox.addEventListener('change', function () {
-        saveUrl(domainName, this.checked);
-        toggleHeaderState(this.checked);
-        chrome.tabs.sendMessage(tab.id, { enabled: this.checked }, null, null)
+        saveUrl(domainName, this.checked, site.options);
+        setHeaderState(this.checked);
+        setOptionsState(this.checked, site.options);
+        chrome.tabs.sendMessage(tab.id, { enabled: this.checked, options: site.options }, null, null)
       });
     });
   });
-
 });

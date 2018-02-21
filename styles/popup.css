@@ -34,6 +34,21 @@ h1.header {
     justify-content: space-between;
     padding: 10px;
     font-size: 1.1em;
+    flex-direction: column;
+}
+
+#options-wrapper {
+    display: none;
+    margin-top: 20px;
+}
+
+.f-item {
+    flex: 1;
+    margin-top: 25px;
+}
+
+.f-item:first-child {
+    margin-top: 0;
 }
 
 #enable-label {

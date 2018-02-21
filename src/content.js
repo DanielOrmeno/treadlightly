@@ -21,7 +21,7 @@ function insertWarning () {
     const div = document.createElement("div");
 
     div.innerHTML =
-    `<div id="tc-warning-header">
+    `<div id="tc-warning-header" class="tc-popup right">
         <h1>Tread Lightly! This is a production site.</h1>
         <div id="tc-warning-header-icon"></div>
     </div>`;
@@ -77,12 +77,14 @@ const UrlKey = "tread_urls";
 
 getUrls((urls) => {
     const url = parseUrl(location.href);
-    if (urls.indexOf(url) > -1) {
+    const site = urls.find(u => u.url === url);
+    if (site.enabled) {
         insertWarning();
     }
 });
 
 chrome.runtime.onMessage.addListener((message, sender, callback) => {
+    console.log(message.options.style);
     if (message.enabled) {
         insertWarning();
     } else {
