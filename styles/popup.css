@@ -5,15 +5,27 @@ body {
     flex-direction: column;
 }
 
+#tl-skull {
+    background-image: url('../assets/img/tlskull.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 4em;
+    height: 4em;
+    margin-right: auto;
+    margin-left: auto;
+    display: none;
+}
+
 #header {
     padding: 1.5em;
-    background-color: #4c6ef5;
+    background-color: #4C8DCA;
     color: white; 
     margin-bottom: 10px;
 }
 
 #header.warning {
-    background-color: rgb(255, 83, 73);
+    background-color: rgb(217, 59, 108);
 }
 
 p.logo {
@@ -25,6 +37,7 @@ p.logo {
 h1.header {
     font-weight: 300;
     margin: 0;
+    margin-top: 10px;
     text-align: center;
 }
 
@@ -35,6 +48,7 @@ h1.header {
     padding: 10px;
     font-size: 1.1em;
     flex-direction: column;
+    width: 200px;
 }
 
 #options-wrapper {
@@ -43,8 +57,10 @@ h1.header {
 }
 
 .f-item {
+    display: flex;
     flex: 1;
     margin-top: 25px;
+    justify-content: center;
 }
 
 .f-item:first-child {
@@ -54,24 +70,27 @@ h1.header {
 #enable-label {
     margin-right: 10px;
 }
-/*
-Schema
-https://color.adobe.com/Colors-color-theme-10463031/edit/?copy=true&base=1&rule=Custom&selected=0&name=Copy%20of%20Colors&mode=rgb&rgbvalues=0.160784,0.172549,0.266667,1,0.32549,0.286275,0.941176,0.941176,0.945098,0.0941176,0.803922,0.792157,0.309804,0.501961,0.882353&swatchOrder=0,1,2,3,4
-*/
 
 #enable-input {
     font-size: 2em;
 }
 
-.pretty.p-switch.p-fill input:checked~.state.tc-danger:before {
-    background-color: #ff5349!important;
+#custom-message {
+    max-width: 200px;
+    width: 200px;
 }
 
 .pretty.p-switch.p-fill input:checked~.state.tc-danger:before {
-    background-color: #ff5349!important;
+    background-color: rgb(217, 59, 108) !important;
+}
+
+.pretty.p-switch.p-fill input:checked~.state.tc-danger:before {
+    background-color: rgb(217, 59, 108) !important;
 }
 
 .pretty.p-switch.p-fill input:checked~.state:before {
-    border-color: #ff5349;
-    background-color: #ff5349!important;
+    border-color: rgb(217, 59, 108) !important;
+    background-color: rgb(217, 59, 108) !important;
 }
+/* 
+https://color.adobe.com/Home-Again-color-theme-10477112/edit/?copy=true&base=2&rule=Custom&selected=0&name=Copy%20of%20Home%20Again&mode=rgb&rgbvalues=0.09129999999999994,0.2738999999999999,0.5395,0.29700000000000004,0.5544,0.792,0.47,0.8588235294117647,0.92,0.96,0.94,0.95,0.8509803921568627,0.23137254901960785,0.4235294117647059&swatchOrder=0,1,4,2,3 */

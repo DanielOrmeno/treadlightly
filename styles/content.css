@@ -1,6 +1,6 @@
 #tc-warning-header {
     z-index: 1000;  
-    background-color: rgba(255, 83, 73, 0.85);
+    background-color: rgba(217, 59, 108, 85);
 }
 
 #tc-warning-header.tc-popup {
@@ -8,14 +8,17 @@
     top: 1em;
     border-radius: 0.5em;
     padding: 15px 10px 10px;
+    transition: all 0.2s linear;
     width: 20%;
 }
 
 #tc-warning-header.tc-popup.right {
     right: 2em;
+    left: calc(80% - 2em);
 }
 
 #tc-warning-header.tc-popup.left {
+    right: calc(80% - 2em);
     left: 2em;
 }
 
@@ -66,8 +69,4 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-#tc-warning-header.tc-hidden-warning {
-    
 }

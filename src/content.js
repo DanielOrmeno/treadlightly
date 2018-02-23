@@ -18,23 +18,32 @@ function getUrls(callback) {
  * Creates the HTML markup and appends it to the body
  */
 function insertWarning (style) {
+    let timeout = null;
+    
     const div = document.createElement("div");
     const st = style === 'tc-popup' ? `${style} right` : style;
     
     div.innerHTML =
     `<div id="tc-warning-header" class="${st}">
-        <h1>Tread Lightly! This is a production site.</h1>
+        <h1>Tread Lightly! <span id="tc-custom-message"></span></h1>
         <div id="tc-warning-header-icon"></div>
     </div>`;
 
     div.addEventListener('mouseover', function ($event) {
         $event.stopImmediatePropagation();
-        const header = document.getElementById('tc-warning-header');
-        const hClass = header.className;
-        if (hClass.search('tc-popup') > -1) {
-            if (hClass.search('right') > -1) header.className = hClass.replace('right', 'left');
-            else if (hClass.search('left') > -1) header.className = hClass.replace('left', 'right');
-        }
+        
+        if (timeout !== null) return;
+        
+        timeout = setTimeout(function() {
+            const header = document.getElementById('tc-warning-header');
+            const hClass = header.className;
+            if (hClass.search('tc-popup') > -1) {
+                if (hClass.search('right') > -1) header.className = hClass.replace('right', 'left');
+                else if (hClass.search('left') > -1) header.className = hClass.replace('left', 'right');
+            }
+            clearTimeout(timeout);
+            timeout = null;
+        }, 300);
     });
 
     document.body.appendChild(div);
@@ -43,12 +52,23 @@ function insertWarning (style) {
     closeIcon.addEventListener('click', removeWarning);
     closeIcon.addEventListener('mouseover', function ($event) {
         $event.stopImmediatePropagation();
+        if (timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+        }
     });
 
     const imgURL = chrome.extension.getURL("assets/img/Orion_close.svg");
     closeIcon.style.backgroundImage = `url(${imgURL})`;
 };
 
+function updateMessage (message) {
+    const span = document.getElementById('tc-custom-message');
+    while (span.firstChild) {
+        span.removeChild(span.firstChild);
+    }
+    span.appendChild(document.createTextNode(message));
+}
 /** 
  * Removes the appended HTML warning header.
 */
@@ -86,6 +106,7 @@ getUrls((urls) => {
     const site = urls.find(u => u.url === url);
     if (site.enabled) {
         insertWarning(site.options.style);
+        updateMessage(site.options.message);
     }
 });
 
@@ -100,6 +121,11 @@ chrome.runtime.onMessage.addListener((message, sender, callback) => {
 
     if (message.name === 'change-style') {
         removeWarning();
-        insertWarning(message.style);
+        insertWarning(message.options.style);
+        updateMessage(message.options.message);
+    }
+
+    if (message.name === 'change-message') {
+        updateMessage(message.msg);
     }
 });

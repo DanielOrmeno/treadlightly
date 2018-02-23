@@ -1,5 +1,5 @@
 const UrlKey = "tread_urls";
-const DefaultSite = { url: '', enabled: false, options: { style: 'tc-popup'} };
+const DefaultSite = { url: '', enabled: false, options: { style: 'tc-popup', message: ''} };
 /**
  * Get the current URL.
  *
@@ -98,8 +98,12 @@ function setHeaderState (enable) {
 
   if (enable) {
     header.className += c;
+    document.getElementById('tl-badge').style.display = 'none';
+    document.getElementById('tl-skull').style.display = 'block';
   } else {
     header.className = header.className.replace(c, '');
+    document.getElementById('tl-skull').style.display = 'none';
+    document.getElementById('tl-badge').style.display = 'inline-block';
   }
 }
 
@@ -115,6 +119,7 @@ function setOptionsState (enable, urlOptions) {
     // grab style from options or default to tc-popup
     const radio = document.getElementById(urlOptions.style) || document.getElementById('tc-popup');
     radio.checked = true;
+    document.getElementById('custom-message').value = urlOptions.message;
   } else {
     options.style.display = 'none';
   }
@@ -123,6 +128,7 @@ function setOptionsState (enable, urlOptions) {
 document.addEventListener('DOMContentLoaded', () => {
   const checkbox = document.querySelector('#tc-enable-warning');
   const styleOptions = document.getElementsByName('warningstyle');
+  const textArea = document.getElementById('custom-message');
   
   getCurrentTabUrl((tab, url) => {
     const domainName = getDomainName(url);
@@ -146,9 +152,15 @@ document.addEventListener('DOMContentLoaded', () => {
         o.onclick = function () {
           site.options.style = this.value;
           saveUrl(domainName, site.enabled, site.options);
-          chrome.tabs.sendMessage(tab.id, { name: 'change-style', style: this.value }, null, null)
+          chrome.tabs.sendMessage(tab.id, { name: 'change-style', options: site.options }, null, null)
         }
-      })
+      });
+      
+      textArea.addEventListener('input', function () {
+        site.options.message = this.value;
+        saveUrl(domainName, site.enabled, site.options);
+        chrome.tabs.sendMessage(tab.id, { name: 'change-message', msg: this.value }, null, null)
+      });
     });
   });
 });

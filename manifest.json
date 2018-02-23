@@ -1,12 +1,12 @@
 {
     "name": "Tread lightly",
-    "description": "A simple addon to flag a site as a Production site",
-    "version": "1.0.1",
+    "description": "A simple addon to add a warning popup to a site.",
+    "version": "1.0.2",
     "manifest_version": 2,
 
     "browser_action": {
         "default_popup": "src/options.html",
-        "default_icon": "assets/img/exp.png"
+        "default_icon": "assets/img/tlicon.png"
     },
 
     "content_scripts": [
