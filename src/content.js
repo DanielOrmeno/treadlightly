@@ -104,7 +104,7 @@ const UrlKey = "tread_urls";
 getUrls((urls) => {
     const url = parseUrl(location.href);
     const site = urls.find(u => u.url === url);
-    if (site.enabled) {
+    if (site && site.enabled) {
         insertWarning(site.options.style);
         updateMessage(site.options.message);
     }
