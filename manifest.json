@@ -1,7 +1,7 @@
 {
     "name": "Tread lightly",
     "description": "A simple addon to add a warning popup to a site.",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "manifest_version": 2,
 
     "browser_action": {
